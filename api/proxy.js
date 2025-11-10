@@ -12,7 +12,7 @@ export default async function handler(request) {
     return Response.redirect('https://foothubhd.online', 302);
   }
 
-  const targetURL = 'https://chanis.hantekomenos.xyz:445/';
+  const targetURL = 'https://palis.hantekomenos.xyz/';
   const newURL = new URL(request.url);
   newURL.hostname = new URL(targetURL).hostname;
 
