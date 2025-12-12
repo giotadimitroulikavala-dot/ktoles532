@@ -4,15 +4,15 @@ export const config = {
 
 export default async function handler(request) {
   // Allow foothubhd.live and foothubhd.online
-  const allowedOriginsPattern = /^https?:\/\/(foothubhd\.live|foothubhd\.online)/;
+  const allowedOriginsPattern = /^https?:\/\/(foothubhd\.info|foothubhd\.info)/;
   const origin = request.headers.get('origin') || request.headers.get('referer');
 
   // If origin not allowed → redirect
   if (!origin || !allowedOriginsPattern.test(origin)) {
-    return Response.redirect('https://foothubhd.online', 302);
+    return Response.redirect('https://foothubhd.info', 302);
   }
 
-  const targetURL = 'https://palis.hantekomenos.xyz/';
+  const targetURL = 'https://f003.backblazeb2.com/';
   const newURL = new URL(request.url);
   newURL.hostname = new URL(targetURL).hostname;
 
