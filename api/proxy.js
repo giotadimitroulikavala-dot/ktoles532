@@ -7,7 +7,6 @@ export default async function handler(request) {
   const newURL = new URL(request.url);
   newURL.hostname = new URL(targetURL).hostname;
 
-  // Clone request into a new one with updated URL and headers
   const proxyRequest = new Request(newURL.toString(), {
     method: request.method,
     headers: request.headers,
@@ -20,20 +19,15 @@ export default async function handler(request) {
   try {
     const response = await fetch(proxyRequest);
 
-    // Clone the response so we can safely modify headers
     const modifiedResponse = new Response(response.body, response);
 
-    // ✅ Allow all origins
+    // Allow all origins
     modifiedResponse.headers.set('Access-Control-Allow-Origin', '*');
     modifiedResponse.headers.set('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
     modifiedResponse.headers.set('Access-Control-Allow-Headers', '*');
 
-    // Cache control
-    if (newURL.pathname.endsWith('.ts')) {
-      modifiedResponse.headers.set('Cache-Control', 'public, max-age=2, s-maxage=2');
-    } else {
-      modifiedResponse.headers.set('Cache-Control', 'no-cache');
-    }
+    // Main cache control (2 seconds)
+    modifiedResponse.headers.set('Cache-Control', 'public, max-age=2, s-maxage=2');
 
     return modifiedResponse;
 
