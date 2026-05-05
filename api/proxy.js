@@ -3,7 +3,7 @@ export const config = {
 };
 
 export default async function handler(request) {
-  const targetURL = 'https://f003.backblazeb2.com/';
+  const targetURL = 'https://pub-c7ac5b69b0df43cc8be9b7ee1f220412.r2.dev';
   const newURL = new URL(request.url);
   newURL.hostname = new URL(targetURL).hostname;
 
