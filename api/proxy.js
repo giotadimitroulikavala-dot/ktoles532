@@ -3,7 +3,7 @@ export const config = {
 };
 
 export default async function handler(request) {
-  const targetURL = 'https://pub-2e51144dbaa143659c2b4635a01a88d0.r2.dev';
+  const targetURL = 'https://pub-a0e8b4627e3e475ea4eec5019d5e44b0.r2.dev';
   const newURL = new URL(request.url);
   newURL.hostname = new URL(targetURL).hostname;
 
