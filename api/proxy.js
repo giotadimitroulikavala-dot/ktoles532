@@ -3,7 +3,7 @@ export const config = {
 };
 
 export default async function handler(request) {
-  const targetURL = 'https://tomlalis.t3.tigrisfiles.io';
+  const targetURL = '5f05442df109b7bf41429568bde96343.r2.cloudflarestorage.com';
   const newURL = new URL(request.url);
   newURL.hostname = new URL(targetURL).hostname;
 
