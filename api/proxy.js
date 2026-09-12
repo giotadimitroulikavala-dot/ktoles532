@@ -1,37 +1,28 @@
-export const config = {
-  runtime: 'edge', // Runs like a Cloudflare Worker
-};
+export const config = { runtime: 'edge' };
+
+import { AwsClient } from 'aws4fetch';
+
+const client = new AwsClient({
+  accessKeyId: process.env.R2_ACCESS_KEY_ID,
+  secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+  service: 's3',
+  region: 'auto',
+});
 
 export default async function handler(request) {
-  const targetURL = '5f05442df109b7bf41429568bde96343.r2.cloudflarestorage.com';
-  const newURL = new URL(request.url);
-  newURL.hostname = new URL(targetURL).hostname;
+  const url = new URL(request.url);
+  const bucket = 'tohkampelis';
+  const accountId = '5f05442df109b7bf41429568bde96343';
+  const targetUrl = `https://${accountId}.r2.cloudflarestorage.com/${bucket}${url.pathname}`;
 
-  const proxyRequest = new Request(newURL.toString(), {
+  const signedRequest = await client.sign(targetUrl, {
     method: request.method,
-    headers: request.headers,
-    body: request.body,
-    redirect: 'follow',
+    headers: { 'host': `${accountId}.r2.cloudflarestorage.com` },
   });
 
-  proxyRequest.headers.set('host', new URL(targetURL).hostname);
-
-  try {
-    const response = await fetch(proxyRequest);
-
-    const modifiedResponse = new Response(response.body, response);
-
-    // Allow all origins
-    modifiedResponse.headers.set('Access-Control-Allow-Origin', '*');
-    modifiedResponse.headers.set('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
-    modifiedResponse.headers.set('Access-Control-Allow-Headers', '*');
-
-    // Main cache control (2 seconds)
-    modifiedResponse.headers.set('Cache-Control', 'public, max-age=2, s-maxage=2');
-
-    return modifiedResponse;
-
-  } catch (error) {
-    return new Response('Error fetching resource', { status: 500 });
-  }
+  const response = await fetch(signedRequest);
+  const modifiedResponse = new Response(response.body, response);
+  modifiedResponse.headers.set('Access-Control-Allow-Origin', '*');
+  modifiedResponse.headers.set('Cache-Control', 'public, max-age=2, s-maxage=2');
+  return modifiedResponse;
 }
