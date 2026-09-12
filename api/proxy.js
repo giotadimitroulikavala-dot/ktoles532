@@ -3,7 +3,7 @@ export const config = {
 };
 
 export default async function handler(request) {
-  const targetURL = 'https://5f05442df109b7bf41429568bde96343.r2.cloudflarestorage.com';
+  const targetURL = 'f003.backblazeb2.com';
   const newURL = new URL(request.url);
   newURL.hostname = new URL(targetURL).hostname;
 
