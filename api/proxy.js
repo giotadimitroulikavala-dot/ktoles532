@@ -3,7 +3,7 @@ export const config = {
 };
 
 export default async function handler(request) {
-  const targetURL = 'https://pub-9d8aae48684a4ae2bc496a8821143a4d.r2.dev';
+  const targetURL = 'https://tomlalis.t3.tigrisfiles.io';
   const newURL = new URL(request.url);
   newURL.hostname = new URL(targetURL).hostname;
 
