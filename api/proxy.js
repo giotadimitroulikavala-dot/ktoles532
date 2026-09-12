@@ -3,7 +3,7 @@ export const config = {
 };
 
 export default async function handler(request) {
-  const targetURL = 'https://5f05442df109b7bf41429568bde96343.r2.cloudflarestorage.com';
+  const targetURL = 'https://t3.storage.dev';
   const newURL = new URL(request.url);
   newURL.hostname = new URL(targetURL).hostname;
 
