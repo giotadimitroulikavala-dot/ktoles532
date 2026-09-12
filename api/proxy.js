@@ -3,7 +3,7 @@ export const config = {
 };
 
 export default async function handler(request) {
-  const targetURL = 'https://tomlalis.t3.tigrisfiles.io';
+  const targetURL = 'https://kopelakis.t3.tigrisfiles.io';
   const newURL = new URL(request.url);
   newURL.hostname = new URL(targetURL).hostname;
 
