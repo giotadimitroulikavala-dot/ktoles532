@@ -3,7 +3,7 @@ export const config = {
 };
 
 export default async function handler(request) {
-  const targetURL = 'https://zoneglakisdelas.b-cdn.net';
+  const targetURL = 'https://hzmtelis.b-cdn.net';
   const newURL = new URL(request.url);
   newURL.hostname = new URL(targetURL).hostname;
 
